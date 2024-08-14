@@ -1,11 +1,10 @@
 const rowsButton = document.querySelector('.row');
-const startButton = document.querySelector('.start');
 const delayButton = document.querySelector('.delay');
+const startButton = document.querySelector('.start');
 const stopButton = document.querySelector('.stop');
 const inputField = document.querySelector('.input');
 const delayInput = document.querySelector('.input2');
 const ledsContainer = document.querySelector('.LEDs');
-
 let delay = 500;
 let isPaused = false;
 let currentRowIndex = 0;
@@ -26,13 +25,13 @@ inputField.addEventListener('keydown', (e) => {
 });
 delayInput.addEventListener('keydown', (e) => {
   if (e.key === 'Enter') {
-      delay = parseInt(delayInput.value) || 500;
+      delay = parseInt(delayInput.value) || 0;
       delayInput.classList.remove('active');
   }
 });
 startButton.addEventListener('click', () => {
   createRows(parseInt(inputField.value));
-  delay = parseInt(delayInput.value) || 500;
+  delay = parseInt(delayInput.value) || 0;
 
   if (isPaused) {
       isPaused = false;

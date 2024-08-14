@@ -48,7 +48,7 @@ stopButton.addEventListener('click', () => {
 function createRows(numRows) {
   ledsContainer.innerHTML = '';
   currentRowIndex = 0;
-  for (let i = 1; i <= numRows; i++) {
+  for (let i = 1; i <= numRows * 2; i+=2) {
       const rowDiv = document.createElement('div');
       rowDiv.className = 'str show';
       for (let j = 0; j < i; j++) {
@@ -60,31 +60,36 @@ function createRows(numRows) {
   }
 }
 function lightenRowsSequentially() {
-  const rows = document.querySelectorAll('.str.show');
-  if (!isPaused) {
-      if (currentRowIndex < rows.length) {
-          const currentRow = rows[currentRowIndex];
-          if (currentRowIndex > 0) {
-              const prevRow = rows[currentRowIndex - 1];
-              prevRow.querySelectorAll('.circle').forEach(circle => {
-                  circle.classList.remove('active');
-              });
-          } else if (currentRowIndex === 0 && rows.length > 1) {
-              const lastRow = rows[rows.length - 1];
-              lastRow.querySelectorAll('.circle').forEach(circle => {
-                  circle.classList.remove('active');
-              });
-          }
-          currentRow.querySelectorAll('.circle').forEach(circle => {
-              circle.classList.add('active');
-          });
-          currentRowIndex++;
-      } else {
-          currentRowIndex = 0;
-      }
-      timeoutId = setTimeout(lightenRowsSequentially, delay);
+    const rows = document.querySelectorAll('.str.show');
+    
+    if (!isPaused) {
+        if (currentRowIndex > 0) {
+            const prevRow = rows[currentRowIndex - 1];
+            prevRow.querySelectorAll('.circle').forEach(circle => {
+                circle.classList.remove('active');
+            });
+        } else if (currentRowIndex === 0 && rows.length > 1) {
+            const lastRow = rows[rows.length - 1];
+            lastRow.querySelectorAll('.circle').forEach(circle => {
+                circle.classList.remove('active');
+            });
+        }
+  
+        const currentRow = rows[currentRowIndex];
+        currentRow.querySelectorAll('.circle').forEach(circle => {
+            circle.classList.add('active');
+        });
+  
+        currentRowIndex++;
+  
+        if (currentRowIndex >= rows.length) {
+            currentRowIndex = 0;
+        }
+  
+        timeoutId = setTimeout(lightenRowsSequentially, delay);
+    }
   }
-}
+  
 const button=document.querySelector('button');
 button.addEventListener('click', imaged)
 function imaged(){
